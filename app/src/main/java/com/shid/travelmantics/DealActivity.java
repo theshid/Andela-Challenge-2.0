@@ -1,6 +1,8 @@
 package com.shid.travelmantics;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
@@ -20,8 +22,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.StorageReference;
@@ -125,7 +129,7 @@ public class DealActivity extends AppCompatActivity {
                 return true;
 
             case R.id.delete_menu:
-                deleteDeal();
+                deleteDialog();
                 Toast.makeText(DealActivity.this, getString(R.string.deal_deleted), Toast.LENGTH_LONG).show();
                 backToList();
             default:
@@ -170,6 +174,37 @@ public class DealActivity extends AppCompatActivity {
         }
     }
 
+    private void deleteDialog(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                this);
+
+        alertDialogBuilder.setTitle("Logging out");
+
+        alertDialogBuilder
+                .setMessage("Are you sure you want to delete deal?")
+                .setCancelable(false)
+                .setPositiveButton(getString(R.string.dialog_log_out_btn_yes), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        deleteDeal();
+                    }
+                })
+                .setNegativeButton(getString(R.string.dialog_log_out_btn_no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // if this button is clicked, just close
+                        // the dialog box and do nothing
+                        dialog.cancel();
+                    }
+                });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+    }
+
     private void backToList() {
         Intent intent = new Intent(DealActivity.this, ListActivity.class);
         startActivity(intent);
@@ -207,6 +242,7 @@ public class DealActivity extends AppCompatActivity {
         inflater.inflate(R.menu.save_menu, menu);
 
         if (FirebaseUtil.isAdmin) {
+
             menu.findItem(R.id.delete_menu).setVisible(true);
             menu.findItem(R.id.save_menu).setVisible(true);
             enableEditTexts(true);

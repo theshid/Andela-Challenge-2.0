@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -87,21 +89,52 @@ public class ListActivity extends AppCompatActivity {
                 return true;
 
             case R.id.logout_menu:
-                AuthUI.getInstance()
-                        .signOut(this)
-                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                            public void onComplete(@NonNull Task<Void> task) {
-                                // ...
-                                Log.d("Logout", "User Logged out");
-                                FirebaseUtil.attachListener();
-                            }
-                        });
+                logOut();
                 FirebaseUtil.detachListener();
 
 
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void logOut(){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                this);
+
+        alertDialogBuilder.setTitle("Logging out");
+
+        alertDialogBuilder
+                .setMessage(getString(R.string.dialog_log_out_message))
+                .setCancelable(false)
+                .setPositiveButton(getString(R.string.dialog_log_out_btn_yes), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        AuthUI.getInstance()
+                                .signOut(ListActivity.this)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        // ...
+                                        Log.d("Logout", "User Logged out");
+                                        FirebaseUtil.attachListener();
+                                    }
+                                });
+                    }
+                })
+                .setNegativeButton(getString(R.string.dialog_log_out_btn_no), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // if this button is clicked, just close
+                        // the dialog box and do nothing
+                        dialog.cancel();
+                    }
+                });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
     }
 
     public void showMenu() {

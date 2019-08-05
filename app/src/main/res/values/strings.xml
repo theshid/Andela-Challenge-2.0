@@ -11,4 +11,10 @@
     <string name="please_save">Please save the deal before deleting</string>
     <string name="new_travel_deal">New Travel Deal</string>
     <string name="logout">Logout</string>
+
+    //Log out Dialog
+    <string name="dialog_log_out_title">Log out</string>
+    <string name="dialog_log_out_message">Are you sure you want to log out ?</string>
+    <string name="dialog_log_out_btn_yes">Yes</string>
+    <string name="dialog_log_out_btn_no">Cancel</string>
 </resources>
