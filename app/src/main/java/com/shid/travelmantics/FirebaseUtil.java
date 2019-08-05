@@ -1,6 +1,6 @@
 package com.shid.travelmantics;
 
-import android.app.Activity;
+
 import android.util.Log;
 import android.widget.Toast;
 
@@ -23,6 +23,7 @@ import java.util.List;
 
 public class FirebaseUtil {
     private static final int RC_SIGN_IN = 89;
+
     public static FirebaseDatabase mFirebaseDb;
     public static DatabaseReference mDbReference;
     private static FirebaseUtil firebaseUtil;
@@ -30,6 +31,7 @@ public class FirebaseUtil {
     public static FirebaseStorage mStorage;
     public static StorageReference mStorageRef;
     public static FirebaseAuth.AuthStateListener authStateListener;
+
     public static ArrayList<TravelDeal> mDeals;
     public static ListActivity caller;
     public static boolean isAdmin;
@@ -37,7 +39,6 @@ public class FirebaseUtil {
     private FirebaseUtil() {
     }
 
-    ;
 
     public static void openFbReference(String ref, final ListActivity callerActivity) {
         if (firebaseUtil == null) {
@@ -52,7 +53,7 @@ public class FirebaseUtil {
                         FirebaseUtil.signIn();
                     } else {
                         String userId = firebaseAuth.getUid();
-                        Log.d("userID logged",userId);
+                        Log.d("userID logged", userId);
                         checkAdmin(userId);
                     }
 
@@ -62,9 +63,9 @@ public class FirebaseUtil {
             connectStorage();
 
 
-        }else {
+        } else {
             String userId = firebaseAuth.getUid();
-            Log.d("userID firebaseUti",userId);
+            Log.d("userID firebaseUti", userId);
             checkAdmin(userId);
         }
         mDeals = new ArrayList<>();
@@ -118,7 +119,7 @@ public class FirebaseUtil {
 
     public static void connectStorage() {
         mStorage = FirebaseStorage.getInstance();
-        mStorageRef =mStorage.getReference().child("deals_pictures");
+        mStorageRef = mStorage.getReference().child("deals_pictures");
     }
 
     public static void signIn() {
@@ -128,7 +129,7 @@ public class FirebaseUtil {
                 new AuthUI.IdpConfig.GoogleBuilder().build());
 
 
-// Create and launch sign-in intent
+        // Create and launch sign-in intent
         caller.startActivityForResult(
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()

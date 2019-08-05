@@ -2,7 +2,6 @@ package com.shid.travelmantics;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,8 +22,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder>
- {
+public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder> {
 
     ArrayList<TravelDeal> deals;
     private FirebaseDatabase mFirebaseDb;
@@ -33,9 +31,7 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder
     private ImageView imageDeal;
 
 
-
     public DealAdapter() {
-       // FirebaseUtil.openFbReference("traveldeals");
 
         mFirebaseDb = FirebaseUtil.mFirebaseDb;
         mDbReference = FirebaseUtil.mDbReference;
@@ -119,18 +115,18 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
-            Log.d("Click",String.valueOf(position));
+            Log.d("Click", String.valueOf(position));
             TravelDeal selectedDeal = deals.get(position);
-            Intent intent = new Intent(v.getContext(),DealActivity.class);
-            intent.putExtra("Deal",selectedDeal);
+            Intent intent = new Intent(v.getContext(), DealActivity.class);
+            intent.putExtra("Deal", selectedDeal);
             v.getContext().startActivity(intent);
         }
 
-        private void showImage(String url){
-            if (url != null && !url.isEmpty()){
+        private void showImage(String url) {
+            if (url != null && !url.isEmpty()) {
                 Picasso.get()
                         .load(url)
-                        .resize(200,200)
+                        .resize(200, 200)
                         .centerCrop()
                         .into(imageDeal);
             }

@@ -6,4 +6,9 @@
     <string name="save_menu">Save</string>
     <string name="delete_deal">Delete Deal</string>
     <string name="upload_image">Upload Image</string>
+    <string name="deal_saved">Deal Saved!</string>
+    <string name="deal_deleted">Deal Deleted!</string>
+    <string name="please_save">Please save the deal before deleting</string>
+    <string name="new_travel_deal">New Travel Deal</string>
+    <string name="logout">Logout</string>
 </resources>

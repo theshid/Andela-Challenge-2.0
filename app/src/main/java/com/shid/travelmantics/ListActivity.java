@@ -24,16 +24,18 @@ import java.util.ArrayList;
 
 public class ListActivity extends AppCompatActivity {
 
+    /*
     ArrayList<TravelDeal> deals;
     private FirebaseDatabase mFirebaseDb;
     private DatabaseReference mDbReference;
     private ChildEventListener mChildListener;
+    */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-       // FirebaseUtil.openFbReference("traveldeals",this);
+
     }
 
     @Override
@@ -45,13 +47,13 @@ public class ListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        FirebaseUtil.openFbReference("traveldeals",this);
+        FirebaseUtil.openFbReference("traveldeals", this);
         RecyclerView rvDeals = findViewById(R.id.rvDeals);
         final DealAdapter adapter = new DealAdapter();
         rvDeals.setAdapter(adapter);
         LinearLayoutManager dealsLayoutManager =
                 //Check
-                new LinearLayoutManager(this,RecyclerView.VERTICAL,false);
+                new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         rvDeals.setLayoutManager(dealsLayoutManager);
         FirebaseUtil.attachListener();
     }
@@ -59,11 +61,11 @@ public class ListActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.list_activity_menu,menu);
+        inflater.inflate(R.menu.list_activity_menu, menu);
         MenuItem insertMenu = menu.findItem(R.id.insert_menu);
-        if (FirebaseUtil.isAdmin){
+        if (FirebaseUtil.isAdmin) {
             insertMenu.setVisible(true);
-        } else{
+        } else {
 
             insertMenu.setVisible(false);
 
@@ -73,7 +75,7 @@ public class ListActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.insert_menu:
                 Intent intent = new Intent(ListActivity.this, DealActivity.class);
                 startActivity(intent);
@@ -85,7 +87,7 @@ public class ListActivity extends AppCompatActivity {
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             public void onComplete(@NonNull Task<Void> task) {
                                 // ...
-                                Log.d("Logout","User Logged out");
+                                Log.d("Logout", "User Logged out");
                                 FirebaseUtil.attachListener();
                             }
                         });
@@ -97,7 +99,7 @@ public class ListActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void showMenu(){
+    public void showMenu() {
         invalidateOptionsMenu();
     }
 }

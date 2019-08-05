@@ -35,6 +35,8 @@ public class DealActivity extends AppCompatActivity {
     private EditText txt_description;
     private TravelDeal deal;
     private ImageView imageView;
+    private Button btn_image;
+
     private static final int PICTURE_RESULT =42;
 
     private FirebaseDatabase mFirebaseDb;
@@ -54,11 +56,13 @@ public class DealActivity extends AppCompatActivity {
             deal = new TravelDeal();
         }
         this.deal = deal;
+
         txt_title.setText(deal.getTitle());
         txt_description.setText(deal.getDescription());
         txt_price.setText(deal.getPrice());
         showImage(deal.getImageUrl());
-        Button btn_image = findViewById(R.id.btn_image);
+
+
         btn_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,6 +79,7 @@ public class DealActivity extends AppCompatActivity {
         txt_price = findViewById(R.id.txt_price);
         txt_description = findViewById(R.id.txt_description);
         imageView = findViewById(R.id.imageTravel);
+        btn_image = findViewById(R.id.btn_image);
     }
 
     private void firebaseSetup() {
@@ -114,14 +119,14 @@ public class DealActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.save_menu:
                 saveDeal();
-                Toast.makeText(DealActivity.this, "Deal Saved!", Toast.LENGTH_LONG).show();
+                Toast.makeText(DealActivity.this,getString(R.string.deal_saved) , Toast.LENGTH_LONG).show();
                 clean();
                 backToList();
                 return true;
 
             case R.id.delete_menu:
                 deleteDeal();
-                Toast.makeText(DealActivity.this, "Deal Deleted!", Toast.LENGTH_LONG).show();
+                Toast.makeText(DealActivity.this, getString(R.string.deal_deleted), Toast.LENGTH_LONG).show();
                 backToList();
             default:
                 return super.onOptionsItemSelected(item);
@@ -144,7 +149,7 @@ public class DealActivity extends AppCompatActivity {
 
     private void deleteDeal() {
         if (deal == null) {
-            Toast.makeText(this, "Please save the deal before deleting", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,getString(R.string.please_save) , Toast.LENGTH_SHORT).show();
             return;
         }
         mDbReference.child(deal.getId()).removeValue();
