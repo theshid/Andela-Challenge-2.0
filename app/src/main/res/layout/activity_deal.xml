@@ -9,6 +9,7 @@
 
     <EditText
         android:id="@+id/txt_title"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/txt_margin_standard"
@@ -46,6 +47,9 @@
 
     <Button
         android:id="@+id/btn_image"
+        android:background="@drawable/btn_sign_in_background"
+        android:textColor="@android:color/white"
+        android:padding="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/txt_margin_standard"
