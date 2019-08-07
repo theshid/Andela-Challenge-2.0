@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardElevation="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="vertical">
+        
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edtTitle"
+            android:hint="Destination"
+            android:text=""
+            android:textColor="@android:color/white"
+            android:textColorHint="@android:color/white"
+            android:textSize="20sp"
+            app:met_singleLineEllipsis="true"
+            app:met_baseColor="@android:color/white"
+            app:met_floatingLabel="highlight"
+            app:met_primaryColor="@android:color/white"/>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edtDescription"
+            android:hint="Description"
+            android:text=""
+            android:textColor="#fff"
+            android:textColorHint="#fff"
+            android:textSize="20sp"
+
+            app:met_singleLineEllipsis="true"
+            app:met_baseColor="#fff"
+            app:met_floatingLabel="highlight"
+            app:met_primaryColor="#fff"/>
+
+        <com.rengwuxian.materialedittext.MaterialEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edtPrice"
+            android:hint="Price"
+            android:inputType="numberDecimal"
+            android:text=""
+            android:textColor="#fff"
+            android:textColorHint="#fff"
+            android:textSize="20sp"
+
+            app:met_singleLineEllipsis="true"
+            app:met_baseColor="#fff"
+            app:met_floatingLabel="highlight"
+            app:met_primaryColor="#fff"/>
+
+        <Button
+            android:id="@+id/btn_image"
+            android:background="@drawable/btn_sign_in_background"
+            android:textColor="@android:color/white"
+            android:padding="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/txt_margin_standard"
+            android:layout_marginTop="@dimen/txt_margin_standard"
+            android:layout_marginEnd="@dimen/txt_margin_standard"
+            android:text="@string/upload_image"
+            />
+
+
+
+
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

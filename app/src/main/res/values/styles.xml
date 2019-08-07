@@ -6,14 +6,23 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/arkhip_font</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
     </style>
 
-    <style name="FirebaseUI.AuthMethodPicker.Logo">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+    <style name="CustomUI" parent="FirebaseUI">
+      <item name="android:windowBackground">@drawable/voyage</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
+    </style>
 
-        <item name="android:layout_gravity">center</item>
-        <item name="android:padding">50dp</item>
+    <style name="DialogCusom" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="editTextColor">#fff</item>
+
+
     </style>
 
 </resources>

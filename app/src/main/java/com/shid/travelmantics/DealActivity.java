@@ -22,7 +22,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 
@@ -41,7 +40,7 @@ public class DealActivity extends AppCompatActivity {
     private ImageView imageView;
     private Button btn_image;
 
-    private static final int PICTURE_RESULT =42;
+    private static final int PICTURE_RESULT = 42;
 
     private FirebaseDatabase mFirebaseDb;
     private DatabaseReference mDbReference;
@@ -50,6 +49,12 @@ public class DealActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_deal);
+
+        // add back arrow to toolbar
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
         firebaseSetup();
         setUpUi();
@@ -72,8 +77,8 @@ public class DealActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent1 = new Intent(Intent.ACTION_GET_CONTENT);
                 intent1.setType("image/jpeg");
-                intent1.putExtra(Intent.EXTRA_LOCAL_ONLY,true);
-                startActivityForResult(intent1,PICTURE_RESULT);
+                intent1.putExtra(Intent.EXTRA_LOCAL_ONLY, true);
+                startActivityForResult(intent1, PICTURE_RESULT);
             }
         });
     }
@@ -94,7 +99,7 @@ public class DealActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICTURE_RESULT && resultCode == RESULT_OK){
+        if (requestCode == PICTURE_RESULT && resultCode == RESULT_OK) {
             Uri imageUri = data.getData();
             final StorageReference reference = FirebaseUtil.mStorageRef.child(imageUri.getLastPathSegment());
             reference.putFile(imageUri).addOnSuccessListener(this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -102,12 +107,12 @@ public class DealActivity extends AppCompatActivity {
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     String pictureName = taskSnapshot.getStorage().getPath();
                     deal.setImageName(pictureName);
-                    Log.d("Name",pictureName);
+                    Log.d("Name", pictureName);
                     reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                         @Override
                         public void onSuccess(Uri uri) {
                             String url = uri.toString();
-                            Log.d("Url",url);
+                            Log.d("Url", url);
                             deal.setImageUrl(url);
                             showImage(url);
                         }
@@ -122,8 +127,9 @@ public class DealActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.save_menu:
+
                 saveDeal();
-                Toast.makeText(DealActivity.this,getString(R.string.deal_saved) , Toast.LENGTH_LONG).show();
+                Toast.makeText(DealActivity.this, getString(R.string.deal_saved), Toast.LENGTH_LONG).show();
                 clean();
                 backToList();
                 return true;
@@ -132,6 +138,9 @@ public class DealActivity extends AppCompatActivity {
                 deleteDialog();
                 Toast.makeText(DealActivity.this, getString(R.string.deal_deleted), Toast.LENGTH_LONG).show();
                 backToList();
+
+            case android.R.id.home:
+                finish();
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -139,6 +148,11 @@ public class DealActivity extends AppCompatActivity {
     }
 
     private void saveDeal() {
+
+        if (!validate()) {
+            Toast.makeText(this, "Save failed", Toast.LENGTH_LONG).show();
+
+        }
 
         deal.setTitle(txt_title.getText().toString());
         deal.setPrice(txt_price.getText().toString());
@@ -151,14 +165,47 @@ public class DealActivity extends AppCompatActivity {
 
     }
 
+    public boolean validate() {
+        boolean valid = true;
+
+        String title = txt_title.getText().toString();
+        String description = txt_description.getText().toString();
+        String price = txt_price.getText().toString();
+
+        if (title.isEmpty()) {
+            txt_title.setError("Do not let field empty");
+            valid = false;
+        } else {
+            txt_title.setError(null);
+        }
+
+
+        if (description.isEmpty()) {
+            txt_description.setError("Do not let field empty");
+            valid = false;
+        } else {
+            txt_description.setError(null);
+        }
+
+        if (price.isEmpty()) {
+            txt_price.setError("Do not let field empty");
+            valid = false;
+        } else {
+            txt_price.setError(null);
+        }
+
+        return valid;
+    }
+
+
     private void deleteDeal() {
         if (deal == null) {
-            Toast.makeText(this,getString(R.string.please_save) , Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.please_save), Toast.LENGTH_SHORT).show();
             return;
         }
         mDbReference.child(deal.getId()).removeValue();
         Log.d("Image Name", deal.getImageName());
-        if (deal.getImageName() != null && !deal.getImageName().isEmpty()){
+        if (deal.getImageName() != null && !deal.getImageName().isEmpty()) {
             StorageReference picRef = FirebaseUtil.mStorage.getReference().child(deal.getImageName());
             picRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
@@ -168,13 +215,13 @@ public class DealActivity extends AppCompatActivity {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Log.d("Delete Image",e.getMessage());
+                    Log.d("Delete Image", e.getMessage());
                 }
             });
         }
     }
 
-    private void deleteDialog(){
+    private void deleteDialog() {
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                 this);
 
@@ -224,12 +271,12 @@ public class DealActivity extends AppCompatActivity {
 
     }
 
-    private void showImage(String url){
-        if (url != null && !url.isEmpty()){
+    private void showImage(String url) {
+        if (url != null && !url.isEmpty()) {
             int width = Resources.getSystem().getDisplayMetrics().widthPixels;
             Picasso.get()
                     .load(url)
-                    .resize(width, width*2/3)
+                    .resize(width, width * 2 / 3)
                     .centerCrop()
                     .into(imageView);
 

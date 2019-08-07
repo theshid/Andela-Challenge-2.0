@@ -17,4 +17,5 @@
     <string name="dialog_log_out_message">Are you sure you want to log out ?</string>
     <string name="dialog_log_out_btn_yes">Yes</string>
     <string name="dialog_log_out_btn_no">Cancel</string>
+    <string name="btn_save">Save</string>
 </resources>
