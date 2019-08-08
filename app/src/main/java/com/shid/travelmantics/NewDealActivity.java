@@ -86,6 +86,16 @@ public class NewDealActivity extends AppCompatActivity {
         deal = new TravelDeal();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (FirebaseUtil.isAdmin) {
+            enableEditTexts(true);
+        } else{
+            enableEditTexts(false);
+        }
+    }
+
     private void saveDeal() {
 
         deal.setTitle(txt_title.getText().toString());
@@ -129,6 +139,15 @@ public class NewDealActivity extends AppCompatActivity {
         }
 
         return valid;
+    }
+
+    private void enableEditTexts(boolean isEnabled) {
+        txt_title.setEnabled(isEnabled);
+        txt_description.setEnabled(isEnabled);
+        txt_price.setEnabled(isEnabled);
+        btn_save.setEnabled(isEnabled);
+        btn_image.setEnabled(isEnabled);
+
     }
 
     private void backToList() {
