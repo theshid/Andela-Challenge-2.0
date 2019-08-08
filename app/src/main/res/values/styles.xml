@@ -11,7 +11,7 @@
     </style>
 
     <style name="CustomUI" parent="FirebaseUI">
-      <item name="android:windowBackground">@drawable/voyage</item>
+      <item name="android:windowBackground">@drawable/logo</item>
         <item name="android:statusBarColor">@color/colorPrimary</item>
     </style>
 

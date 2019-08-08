@@ -106,7 +106,7 @@ public class DealAdapter extends RecyclerView.Adapter<DealAdapter.DealViewHolder
         }
 
         public void bind(TravelDeal deal) {
-            tvTitle.setText("Place:" +deal.getTitle());
+            tvTitle.setText(deal.getTitle());
             tvDescription.setText(deal.getDescription());
             tvPrice.setText("Price: $" + deal.getPrice());
             showImage(deal.getImageUrl());

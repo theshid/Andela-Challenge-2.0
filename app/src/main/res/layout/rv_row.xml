@@ -31,7 +31,7 @@
             android:layout_marginStart="@dimen/txt_margin_standard"
             android:layout_marginTop="@dimen/txt_margin_standard"
             android:text="TextView"
-            android:textSize="@dimen/title_large"
+            android:textSize="20sp"
             android:textColor="@color/colorPrimary"
             app:layout_constraintStart_toEndOf="@+id/imageDeal"
             app:layout_constraintTop_toTopOf="parent" />
